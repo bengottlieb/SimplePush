@@ -53,6 +53,12 @@ public class SimplePush: NSObject {
 		let url = URL(string: raw)!
 		var request = URLRequest(url: url)
 		
+		#if targetEnvironment(simulator)
+			if !sandbox {
+				print("Trying to send a production APNS from the simulator")
+			}
+		#endif
+		
 		request.httpMethod = "POST"
 		request.httpBody = payload.data
 		
